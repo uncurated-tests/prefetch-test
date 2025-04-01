@@ -80,12 +80,16 @@ export function ControlPanel({
             />
           </div>
         </div>
+
+        <div className="space-y-4 pt-4 text-center">
+          <Button onClick={onApply} className="w-full">
+            Apply Settings
+          </Button>
+          <div className="text-xs text-muted-foreground">
+            Press apply settings to reload the page with the new settings.
+          </div>
+        </div>
       </SidebarContent>
-      <SidebarFooter className="border-t p-4">
-        <Button onClick={onApply} className="w-full">
-          Apply Settings
-        </Button>
-      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   )
