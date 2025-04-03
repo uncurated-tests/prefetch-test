@@ -9,17 +9,18 @@ export default async function SlugPage({
   params,
   searchParams,
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
   searchParams: Promise<{ prefetch?: string; delay?: string }>
 }) {
-  const p = await searchParams
-  const currentId = parseInt(params.id)
+  const sp = await searchParams
+  const p = await params
+  const currentId = parseInt(p.id)
   const nextId = currentId + 1
-  const delay = Number(p.delay) || 0
+  const delay = Number(sp.delay) || 0
 
   const data = await getDelayedData(delay)  
   const renderLink = (href: string, children: React.ReactNode) => {
-    if (p.prefetch === "hover") {
+    if (sp.prefetch === "hover") {
       return (
         <PrefetchLink href={href} delay={delay}>
           {children}
@@ -31,9 +32,9 @@ export default async function SlugPage({
       <Link
         href={href}
         prefetch={
-            p.prefetch === "true"
+            sp.prefetch === "true"
             ? true
-            : p.prefetch === "false"
+            : sp.prefetch === "false"
             ? false
             : undefined
         }
@@ -54,7 +55,7 @@ export default async function SlugPage({
         <p className="text-sm">Current ID: {currentId}</p>
         <div className="mt-4">
           {renderLink(
-            `/slug/${nextId}?prefetch=${p.prefetch || 'undefined'}&delay=${delay}`,
+            `/slug/${nextId}?prefetch=${sp.prefetch || 'undefined'}&delay=${delay}`,
             `Go to page ${nextId}`
           )}
         </div>
