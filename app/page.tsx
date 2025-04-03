@@ -128,6 +128,13 @@ export default function Home() {
                       "Sleep with Static Shell"
                     )}
                   </div>
+                  <div>
+                    <h3 className="font-medium mb-2">Sequential Navigation</h3>
+                    {renderLink(
+                      `/slug/1?prefetch=${prefetchValue}&delay=${delayValue}`,
+                      "Start Sequential Navigation"
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="rounded-lg border border-dashed p-6">
