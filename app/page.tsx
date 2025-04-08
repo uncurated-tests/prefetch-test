@@ -16,7 +16,6 @@ export default function Home() {
     // Add query parameters to the href
     const params = new URLSearchParams();
 
-    console.log("prefetchValue", prefetchValue);
     // Only add prefetch parameter if it's not "undefined"
     if (prefetchValue != "undefined") {
       params.set("prefetch", prefetchValue || "");
