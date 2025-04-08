@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import LayoutShell from "./layout-shell";
 import { Toaster } from "@/components/ui/sonner";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,12 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="min-h-screen flex flex-col">
-          <LayoutShell>
+        <div className="min-h-screen flex flex-row">
             <main className="flex-1 max-w-4xl mx-auto w-full p-4">
               {children}
             </main>
-          </LayoutShell>
           <Toaster />
         </div>
       </body>

@@ -7,11 +7,9 @@ import Link from "next/link";
 import { ControlPanel } from "@/components/control-panel";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { toast } from "sonner"
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
 
 
-export default function LayoutShell({ children }: { children: React.ReactNode }) {
+export default function LayoutShell() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -55,9 +53,6 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
         setDelayValue={setDelayValue}
         onApply={handleApplySettings}
       />
-      <SidebarInset>
-        {children}
-      </SidebarInset>
     </SidebarProvider>
   );
 }

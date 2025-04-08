@@ -1,4 +1,4 @@
 export default function Loading() {
-  return <div>Root level loading.tsx</div>
+  return <div>Super Root level loading.tsx</div>
 }
 

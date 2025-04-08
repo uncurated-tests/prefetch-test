@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { getDelayedData } from '../actions'
+import { getDelayedData } from '../../actions'
 
 export default function DynamicPage({
   searchParams,

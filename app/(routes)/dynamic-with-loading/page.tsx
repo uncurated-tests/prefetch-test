@@ -1,9 +1,6 @@
-import { Suspense } from 'react'
-import { getDelayedData } from '../actions'
+import { getDelayedData } from '../../actions'
 
-export const experimental_ppr = true
-
-export default function DynamicPPRPage({
+export default function DynamicWithLoadingPage({
   searchParams,
 }: {
   searchParams: Promise<{ delay?: string }>
@@ -11,13 +8,11 @@ export default function DynamicPPRPage({
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">Dynamic Page with loading.tsx </h1>
+      <h1 className="text-2xl font-bold">Dynamic Page with Loading </h1>
       <p className="text-muted-foreground">
-        This file has a static shell but dynamic content.
+        This page has a file-level loading.tsx that shows while data is being fetched.
       </p>
-      <Suspense fallback={<div>Loading...</div>}>
-        <DelayedLoad searchParams={searchParams} />
-      </Suspense>
+      <DelayedLoad searchParams={searchParams} />
     </div>
   )
 } 
