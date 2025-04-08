@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Separator } from "@/components/ui/separator"
+import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 
 interface ControlPanelProps {
   prefetchValue: string | null
@@ -24,13 +26,18 @@ export function ControlPanel({
   setDelayValue,
   onApply,
 }: ControlPanelProps) {
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  const url = `/${params.toString() ? `?${params.toString()}` : ""}`;
   return (
     <Sidebar side="left">
       <SidebarHeader className="border-b p-4">
+        <Link href={url}>
         <div className="flex items-center gap-2">
           <Settings className="h-5 w-5" />
           <h2 className="font-medium">Prefetch Controls</h2>
         </div>
+        </Link>
       </SidebarHeader>
       <SidebarContent className="p-4">
         <div className="space-y-6">
