@@ -1,22 +1,29 @@
-"use client"
+"use client";
 
-import { Settings } from "lucide-react"
+import { Settings } from "lucide-react";
+import { useEffect, useState } from "react";
 
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Separator } from "@/components/ui/separator"
-import Link from "next/link"
-import { useSearchParams } from "next/navigation"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarRail,
+} from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 interface ControlPanelProps {
-  prefetchValue: string | null
-  setPrefetchValue: (value: string) => void
-  delayValue: string
-  setDelayValue: (value: string) => void
-  onApply: () => void
+  prefetchValue: string | null;
+  setPrefetchValue: (value: string) => void;
+  delayValue: string;
+  setDelayValue: (value: string) => void;
+  onApply: () => void;
 }
 
 export function ControlPanel({
@@ -29,21 +36,37 @@ export function ControlPanel({
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const url = `/${params.toString() ? `?${params.toString()}` : ""}`;
+
+  // Use the time when the component mounts as the last fetched time
+  const [lastFetched] = useState<number>(() => Date.now());
+  const [secondsAgo, setSecondsAgo] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSecondsAgo(Math.floor((Date.now() - lastFetched) / 1000));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [lastFetched]);
+
   return (
     <Sidebar side="left">
       <SidebarHeader className="border-b p-4">
         <Link href={url}>
-        <div className="flex items-center gap-2">
-          <Settings className="h-5 w-5" />
-          <h2 className="font-medium">Prefetch Controls</h2>
-        </div>
+          <div className="flex items-center gap-2">
+            <Settings className="h-5 w-5" />
+            <h2 className="font-medium">Prefetch Controls</h2>
+          </div>
         </Link>
       </SidebarHeader>
       <SidebarContent className="p-4">
         <div className="space-y-6">
           <div className="space-y-3">
             <Label className="text-sm font-medium">Prefetch</Label>
-            <RadioGroup value={prefetchValue || "undefined"} onValueChange={setPrefetchValue} className="space-y-2">
+            <RadioGroup
+              value={prefetchValue || "undefined"}
+              onValueChange={setPrefetchValue}
+              className="space-y-2"
+            >
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="true" id="prefetch-true" />
                 <Label htmlFor="prefetch-true" className="cursor-pointer">
@@ -98,7 +121,11 @@ export function ControlPanel({
         </div>
       </SidebarContent>
       <SidebarRail />
+      <SidebarFooter>
+        <div className="text-xs text-muted-foreground text-center">
+          Last freshed: {secondsAgo}s ago
+        </div>
+      </SidebarFooter>
     </Sidebar>
-  )
+  );
 }
-

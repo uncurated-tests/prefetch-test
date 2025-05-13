@@ -17,7 +17,7 @@ export default function Home() {
     const params = new URLSearchParams();
 
     // Only add prefetch parameter if it's not "undefined"
-    if (prefetchValue != "undefined") {
+    if (prefetchValue !== "undefined") {
       params.set("prefetch", prefetchValue || "");
     }
 
@@ -59,37 +59,31 @@ export default function Home() {
   return (
     <div className="flex h-full w-full flex-col">
       <header className="border-b p-4">
-        <h1 className="text-xl font-semibold">Prefetch Demo</h1>
+        <h1 className="text-xl font-semibold">Next Prefetch Playground</h1>
       </header>
       <main className="flex-1 p-6">
         <div className="space-y-8">
           <div className="rounded-lg border p-6">
-            <h2 className="text-lg font-medium mb-4">Test Pages</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium mb-2">Static Page</h3>
+                <h3 className="font-medium mb-2">Static</h3>
                 {renderLink("/static", "Static Page (renders immediately)")}
               </div>
 
               <div>
-                <h3 className="font-medium mb-2">Dynamic Page with Suspense</h3>
-                {renderLink("/dynamic", "Dynamic Page (fetches data)")}
+                <h3 className={"font-medium mb-2"}>Dynamic </h3>
+                <div>
+                  {renderLink("/dynamic", "Dynamic Page (fetches data)")}
+                </div>
+                <div>
+                  {renderLink(
+                    "/dynamic-with-loading",
+                    "Dynamic Page with Loading State"
+                  )}
+                </div>
+                <div>{renderLink("/dynamic-ppr", "Dynamic Page with PPR")}</div>
               </div>
 
-              <div>
-                <h3 className="font-medium mb-2">
-                  Dynamic Page with loading.tsx
-                </h3>
-                {renderLink(
-                  "/dynamic-with-loading",
-                  "Dynamic Page with Loading State"
-                )}
-              </div>
-
-              <div>
-                <h3 className="font-medium mb-2">Dynamic PPR Page</h3>
-                {renderLink("/dynamic-ppr", "Dynamic Page with PPR")}
-              </div>
               <div>
                 <h3 className="font-medium mb-2">Sleep Page</h3>
                 {renderLink("/sleep", "Sleep Page")}
