@@ -6,8 +6,7 @@ import Link from "next/link";
 
 import { ControlPanel } from "@/components/control-panel";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { toast } from "sonner"
-
+import { toast } from "sonner";
 
 export default function LayoutShell() {
   const searchParams = useSearchParams();
@@ -37,9 +36,9 @@ export default function LayoutShell() {
       params.toString() ? `?${params.toString()}` : ""
     }`;
     toast("Settings applied.", {
-        position: "top-center",
-        duration: 1000,
-    })
+      position: "top-center",
+      duration: 1000,
+    });
 
     router.push(newUrl);
   };

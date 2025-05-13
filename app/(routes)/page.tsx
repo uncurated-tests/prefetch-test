@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 import { PrefetchLink } from "@/components/prefetch-link";
-
+export const experimental_ppr = true;
 export default function Home() {
   const searchParams = useSearchParams();
   const router = useRouter();
