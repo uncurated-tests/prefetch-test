@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { use } from "react";
+import { use, useEffect, useState, useRef } from "react";
 
 export function ControlPanel(props: {
   params: Promise<{ prefetchStrategy: string; delay: string }>;
@@ -25,6 +25,20 @@ export function ControlPanel(props: {
   );
 
   const router = useRouter();
+
+  const [secondsSinceRefresh, setSecondsSinceRefresh] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setSecondsSinceRefresh(0);
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setSecondsSinceRefresh((s) => s + 1);
+    }, 1000);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
 
   const prefetchOptions = [
     ["true", "false"],
@@ -51,7 +65,7 @@ export function ControlPanel(props: {
   return (
     <Sidebar side="left">
       <SidebarHeader className="border-b p-4">
-        <Link href="/">
+        <Link href={`/${delayValue || "0"}/${prefetchValue || "undefined"}`}>
           <div className="flex items-center gap-2">
             <Settings className="h-5 w-5" />
             <h2 className="font-medium">Prefetch Controls</h2>
@@ -95,7 +109,7 @@ export function ControlPanel(props: {
       <SidebarRail />
       <SidebarFooter>
         <div className="text-xs text-muted-foreground text-center">
-          Last freshed: --
+          Last refreshed: {secondsSinceRefresh}s ago
         </div>
       </SidebarFooter>
     </Sidebar>

@@ -43,6 +43,12 @@ export default async function Home(props: {
     <div className="flex h-full w-full flex-col">
       <header className="border-b p-4">
         <h1 className="text-xl font-semibold">Next Prefetch Playground</h1>
+        {/* <h2 className="text-xs text-gray-500 mt-2">
+          Next.js was designed to enable instant transitions when clicking
+          around via soft navigations, without full page refreshes. This{" "}
+          <b>prefetching</b> playground allows you to understand how prefetching
+          works, and how it interacts with server-side data fetching.
+        </h2> */}
       </header>
       <main className="flex-1 p-6">
         <div className="space-y-8">
