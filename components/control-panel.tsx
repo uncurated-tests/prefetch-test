@@ -15,12 +15,14 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export function ControlPanel() {
   const searchParams = useSearchParams();
   const prefetchValue = searchParams.get("prefetch") || "undefined";
   const delayValue = searchParams.get("delay") || "0";
+
+  const router = useRouter();
 
   return (
     <Sidebar side="left">
@@ -43,6 +45,8 @@ export function ControlPanel() {
               params.set("prefetch", prefetch as string);
             if (delay && delay !== "0") params.set("delay", delay as string);
             const url = `/${params.toString() ? `?${params.toString()}` : ""}`;
+
+            router.push(url);
             if (typeof window !== "undefined") {
               window.location.href = url;
             }

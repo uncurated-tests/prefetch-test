@@ -1,16 +1,16 @@
-"use client";
-
-import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 import { PrefetchLink } from "@/components/prefetch-link";
-export const experimental_ppr = true;
-export default function Home() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
 
-  const delayValue = Number(searchParams.get("delay")) || 0;
-  const prefetchValue = searchParams.get("prefetch") || "undefined";
+export const experimental_ppr = true;
+
+export default async function Home(props: {
+  searchParams: Promise<{ [key: string]: string }>;
+}) {
+  const searchParams = await props.searchParams;
+
+  const delayValue = Number(searchParams.delay) || 0;
+  const prefetchValue = searchParams.prefetch || "undefined";
 
   const renderLink = (href: string, children: React.ReactNode) => {
     // Add query parameters to the href
