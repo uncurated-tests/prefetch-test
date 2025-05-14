@@ -4,11 +4,15 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-export default function LayoutShell() {
+export default async function LayoutShell({
+  params,
+}: {
+  params: Promise<{ prefetchStrategy: string; delay: string }>;
+}) {
   return (
     <SidebarProvider>
       <Suspense fallback={<div>Loading...</div>}>
-        <ControlPanel />
+        <ControlPanel params={params} />
       </Suspense>
     </SidebarProvider>
   );

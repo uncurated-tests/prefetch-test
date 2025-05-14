@@ -12,15 +12,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { use } from "react";
 
-export function ControlPanel() {
-  const searchParams = useSearchParams();
-  const prefetchValue = searchParams.get("prefetch") || "undefined";
-  const delayValue = searchParams.get("delay") || "0";
+export function ControlPanel(props: {
+  params: Promise<{ prefetchStrategy: string; delay: string }>;
+}) {
+  const { prefetchStrategy: prefetchValue, delay: delayValue } = use(
+    props.params
+  );
 
   const router = useRouter();
 
@@ -44,7 +46,8 @@ export function ControlPanel() {
             if (prefetch && prefetch !== "undefined")
               params.set("prefetch", prefetch as string);
             if (delay && delay !== "0") params.set("delay", delay as string);
-            const url = `/${params.toString() ? `?${params.toString()}` : ""}`;
+
+            const url = `/${delay}/${prefetch}`;
 
             router.push(url);
             if (typeof window !== "undefined") {

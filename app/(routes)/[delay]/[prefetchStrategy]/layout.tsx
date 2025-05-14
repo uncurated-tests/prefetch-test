@@ -9,10 +9,16 @@ export function generateStaticParams() {
   ];
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ prefetchStrategy: string; delay: string }>;
+}) {
   return (
     <div className="flex flex-row">
-      <LayoutShell />
+      <LayoutShell params={params} />
       {children}
     </div>
   );
