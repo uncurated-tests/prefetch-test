@@ -6,11 +6,11 @@ async function SleepComponent({ ms }: { ms: number }) {
 }
 
 export default async function Page({
-  searchParams,
+  params,
 }: {
-  searchParams: Promise<{ ms?: string }>;
+  params: Promise<{ ms?: string }>;
 }) {
-  const params = await searchParams;
-  const ms = params.ms ? Number.parseInt(params.ms) : 1000;
-  return <SleepComponent ms={ms} />;
+  const { ms } = await params;
+  const msValue = ms ? Number.parseInt(ms) : 1000;
+  return <SleepComponent ms={msValue} />;
 }

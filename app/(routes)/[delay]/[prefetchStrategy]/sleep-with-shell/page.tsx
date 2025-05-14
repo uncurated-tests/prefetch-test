@@ -8,17 +8,17 @@ async function SleepComponent({ ms }: { ms: number }) {
 }
 
 export default async function Page({
-  searchParams,
+  params,
 }: {
-  searchParams: Promise<{ ms?: string }>;
+  params: Promise<{ ms?: string }>;
 }) {
-  const params = await searchParams;
-  const ms = params.ms ? Number.parseInt(params.ms) : 1000;
+  const { ms } = await params;
+  const msValue = ms ? Number.parseInt(ms) : 1000;
   return (
     <div className="space-y-4">
       This is a static part
       <Suspense fallback={<div>Loading...</div>}>
-        <SleepComponent ms={ms} />
+        <SleepComponent ms={msValue} />
       </Suspense>
     </div>
   );

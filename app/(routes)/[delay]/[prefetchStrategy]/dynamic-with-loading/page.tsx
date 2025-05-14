@@ -1,9 +1,9 @@
 import { getDelayedData } from "../../../../actions";
 
 export default function DynamicWithLoadingPage({
-  searchParams,
+  params,
 }: {
-  searchParams: Promise<{ delay?: string }>;
+  params: Promise<{ delay?: string }>;
 }) {
   return (
     <div className="space-y-4">
@@ -12,19 +12,19 @@ export default function DynamicWithLoadingPage({
         This page has a file-level loading.tsx that shows while data is being
         fetched.
       </p>
-      <DelayedLoad searchParams={searchParams} />
+      <DelayedLoad params={params} />
     </div>
   );
 }
 
 const DelayedLoad = async ({
-  searchParams,
+  params,
 }: {
-  searchParams: Promise<{ delay?: string }>;
+  params: Promise<{ delay?: string }>;
 }) => {
-  const params = await searchParams;
-  const delay = Number(params.delay) || 0;
-  const data = await getDelayedData(delay);
+  const { delay } = await params;
+  const delayValue = Number(delay) || 0;
+  const data = await getDelayedData(delayValue);
 
   return (
     <div>

@@ -13,24 +13,7 @@ export default async function Home(props: {
   const prefetchValue = params.prefetchStrategy || "undefined";
 
   const renderLink = (href: string, children: React.ReactNode) => {
-    // Add query parameters to the href
-    const params = new URLSearchParams();
-
-    // Only add prefetch parameter if it's not "undefined"
-    if (prefetchValue !== "undefined") {
-      params.set("prefetch", prefetchValue || "");
-    }
-
-    // Add delay parameter if it exists
-    if (delayValue) {
-      params.set("delay", delayValue.toString());
-    }
-
-    // Construct the final URL with parameters
-    const finalHref = params.toString()
-      ? `${href}${href.includes("?") ? "&" : "?"}${params.toString()}`
-      : href;
-
+    const finalHref = `/${delayValue}/${prefetchValue}${href}`;
     if (prefetchValue === "hover") {
       return (
         <PrefetchLink href={finalHref} delay={delayValue}>

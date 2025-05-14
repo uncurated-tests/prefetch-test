@@ -4,9 +4,9 @@ import { getDelayedData } from "../../../../actions";
 export const experimental_ppr = true;
 
 export default function DynamicPPRPage({
-  searchParams,
+  params,
 }: {
-  searchParams: Promise<{ delay?: string }>;
+  params: Promise<{ delay?: string }>;
 }) {
   return (
     <div className="space-y-4">
@@ -15,20 +15,20 @@ export default function DynamicPPRPage({
         This file has a static shell but dynamic content.
       </p>
       <Suspense fallback={<div>Loading...</div>}>
-        <DelayedLoad searchParams={searchParams} />
+        <DelayedLoad params={params} />
       </Suspense>
     </div>
   );
 }
 
 const DelayedLoad = async ({
-  searchParams,
+  params,
 }: {
-  searchParams: Promise<{ delay?: string }>;
+  params: Promise<{ delay?: string }>;
 }) => {
-  const params = await searchParams;
-  const delay = Number(params.delay) || 0;
-  const data = await getDelayedData(delay);
+  const { delay } = await params;
+  const delayValue = Number(delay) || 0;
+  const data = await getDelayedData(delayValue);
 
   return (
     <div>

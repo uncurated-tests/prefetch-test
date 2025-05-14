@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { use } from "react";
 
 export function ControlPanel(props: {
@@ -26,6 +26,28 @@ export function ControlPanel(props: {
 
   const router = useRouter();
 
+  const prefetchOptions = [
+    ["true", "false"],
+    ["undefined", "hover"],
+  ];
+  const delayOptions = ["0", "2000", "10000"];
+
+  const handlePrefetchClick = (value: string) => {
+    const url = `/${delayValue || "0"}/${value}`;
+    router.push(url);
+    if (typeof window !== "undefined") {
+      window.location.href = url;
+    }
+  };
+
+  const handleDelayClick = (value: string) => {
+    const url = `/${value}/${prefetchValue || "undefined"}`;
+    router.push(url);
+    if (typeof window !== "undefined") {
+      window.location.href = url;
+    }
+  };
+
   return (
     <Sidebar side="left">
       <SidebarHeader className="border-b p-4">
@@ -36,111 +58,39 @@ export function ControlPanel(props: {
           </div>
         </Link>
       </SidebarHeader>
-      <SidebarContent className="p-4">
-        <form
-          action={(formData) => {
-            // Build URL and redirect
-            const params = new URLSearchParams();
-            const prefetch = formData.get("prefetch");
-            const delay = formData.get("delay");
-            if (prefetch && prefetch !== "undefined")
-              params.set("prefetch", prefetch as string);
-            if (delay && delay !== "0") params.set("delay", delay as string);
-
-            const url = `/${delay}/${prefetch}`;
-
-            router.push(url);
-            if (typeof window !== "undefined") {
-              window.location.href = url;
-            }
-          }}
-        >
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <Label className="text-sm font-medium">Prefetch</Label>
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    name="prefetch"
-                    value="true"
-                    id="prefetch-true"
-                    defaultChecked={prefetchValue === "true"}
-                  />
-                  <Label htmlFor="prefetch-true" className="cursor-pointer">
-                    true
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    name="prefetch"
-                    value="false"
-                    id="prefetch-false"
-                    defaultChecked={prefetchValue === "false"}
-                  />
-                  <Label htmlFor="prefetch-false" className="cursor-pointer">
-                    false
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    name="prefetch"
-                    value="undefined"
-                    id="prefetch-undefined"
-                    defaultChecked={
-                      prefetchValue === "undefined" || !prefetchValue
-                    }
-                  />
-                  <Label
-                    htmlFor="prefetch-undefined"
-                    className="cursor-pointer"
-                  >
-                    undefined
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    name="prefetch"
-                    value="hover"
-                    id="prefetch-hover"
-                    defaultChecked={prefetchValue === "hover"}
-                  />
-                  <Label htmlFor="prefetch-hover" className="cursor-pointer">
-                    on hover
-                  </Label>
-                </div>
-              </div>
-            </div>
-
-            <Separator />
-
-            <div className="space-y-3">
-              <Label htmlFor="delay" className="text-sm font-medium">
-                Delay in MS
-              </Label>
-              <Input
-                id="delay"
-                name="delay"
-                type="number"
-                min="0"
-                defaultValue={delayValue}
-                placeholder="Enter delay in milliseconds"
-              />
-            </div>
+      <SidebarContent className="p-4 space-y-8">
+        <div>
+          <div className="text-sm font-medium mb-2">Prefetch Strategy</div>
+          <div className="grid grid-cols-2 gap-2">
+            {prefetchOptions.flat().map((option) => (
+              <Button
+                key={option}
+                variant={prefetchValue === option ? "default" : "outline"}
+                className="w-full"
+                onClick={() => handlePrefetchClick(option)}
+                type="button"
+              >
+                {option}
+              </Button>
+            ))}
           </div>
-
-          <div className="space-y-4 pt-4 text-center">
-            <Button type="submit" className="w-full">
-              Apply Settings
-            </Button>
-            <div className="text-xs text-muted-foreground">
-              Press apply settings to reload the page with the new settings.
-            </div>
+        </div>
+        <div>
+          <div className="text-sm font-medium mb-2">Delay</div>
+          <div className="flex flex-col gap-2">
+            {delayOptions.map((option) => (
+              <Button
+                key={option}
+                variant={delayValue === option ? "default" : "outline"}
+                className="w-full"
+                onClick={() => handleDelayClick(option)}
+                type="button"
+              >
+                {option}
+              </Button>
+            ))}
           </div>
-        </form>
+        </div>
       </SidebarContent>
       <SidebarRail />
       <SidebarFooter>
