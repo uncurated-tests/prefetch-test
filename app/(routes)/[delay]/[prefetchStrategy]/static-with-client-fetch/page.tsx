@@ -1,8 +1,6 @@
 "use client";
 import { use, useEffect, useState } from "react";
 
-export const experimental_ppr = true;
-
 export default function StaticPage({
   params,
 }: {
