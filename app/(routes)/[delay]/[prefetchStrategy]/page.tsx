@@ -43,6 +43,10 @@ export default async function Home(props: {
     <div className="flex h-full w-full flex-col">
       <header className="border-b p-4">
         <h1 className="text-xl font-semibold">Next Prefetch Playground</h1>
+        <h2 className="text-sm text-gray-500 mt-2">
+          This is a playground for understanding how different prefetching
+          strategies work given different delays in Next.js.
+        </h2>
         {/* <h2 className="text-xs text-gray-500 mt-2">
           Next.js was designed to enable instant transitions when clicking
           around via soft navigations, without full page refreshes. This{" "}
@@ -57,8 +61,13 @@ export default async function Home(props: {
               <div>
                 <h3 className="font-medium mb-2">Static</h3>
                 {renderLink("/static", "Static Page (renders immediately)")}
+                <div>
+                  {renderLink(
+                    "/static-with-client-fetch",
+                    "Static Page with Client Fetch (renders immediately)"
+                  )}
+                </div>
               </div>
-
               <div>
                 <h3 className={"font-medium mb-2"}>Dynamic </h3>
                 <div>
