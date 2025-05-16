@@ -83,12 +83,11 @@ export default async function Home(props: {
               </div>
 
               <div>
-                <h3 className="font-medium mb-2">Sleep Page</h3>
+                <h3 className="font-medium mb-2">Sleep</h3>
                 {renderLink("/sleep", "Sleep Page")}
-              </div>
-              <div>
-                <h3 className="font-medium mb-2">Sleep with Shell</h3>
-                {renderLink("/sleep-with-shell", "Sleep with Static Shell")}
+                <div>
+                  {renderLink("/sleep-with-shell", "Sleep with Static Shell")}
+                </div>
               </div>
               <div>
                 <h3 className="font-medium mb-2">Sequential Navigation</h3>
