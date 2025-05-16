@@ -1,6 +1,6 @@
 "use client";
 
-import { Settings } from "lucide-react";
+import { ExternalLink, Settings, Info } from "lucide-react";
 
 import {
   Sidebar,
@@ -68,13 +68,23 @@ export function ControlPanel(props: {
         <Link href={`/${delayValue || "0"}/${prefetchValue || "undefined"}`}>
           <div className="flex items-center gap-2">
             <Settings className="h-5 w-5" />
-            <h2 className="font-medium">Prefetch Controls</h2>
+            <h2 className="font-medium text-lg">Prefetch Controls</h2>
           </div>
         </Link>
       </SidebarHeader>
       <SidebarContent className="p-4 space-y-8">
         <div>
-          <div className="text-sm font-medium mb-2">Prefetch Strategy</div>
+          <div className="text-sm font-medium mb-2">
+            <a
+              href="https://nextjs.org/docs/app/api-reference/components/link#prefetch"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-1"
+            >
+              Prefetch strategy
+              <Info className="h-4 w-4" />
+            </a>
+          </div>
           <div className="grid grid-cols-2 gap-2">
             {prefetchOptions.flat().map((option) => (
               <Button
@@ -90,7 +100,7 @@ export function ControlPanel(props: {
           </div>
         </div>
         <div>
-          <div className="text-sm font-medium mb-2">Delay</div>
+          <div className="text-sm font-medium mb-2">Delay (in ms)</div>
           <div className="flex flex-col gap-2">
             {delayOptions.map((option) => (
               <Button
