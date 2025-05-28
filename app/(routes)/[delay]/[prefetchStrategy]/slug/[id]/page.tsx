@@ -8,9 +8,9 @@ export const experimental_ppr = true;
 export default async function SlugPage({
   params,
 }: {
-  params: Promise<{ id: string; prefetch?: string; delay?: string }>;
+  params: Promise<{ id: string; prefetchStrategy?: string; delay?: string }>;
 }) {
-  const { id, prefetch, delay } = await params;
+  const { id, prefetchStrategy: prefetch, delay } = await params;
   const currentId = Number.parseInt(id);
   const nextId = currentId + 1;
   const delayValue = Number(delay) || 0;
